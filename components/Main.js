@@ -21,7 +21,7 @@ let giftcards = products.filter((product) => product.category === "giftcard");
 
 const Main = () => {
   return (
-    <main className="pt-20">
+    <main className="pt-20 min-h-screen flex items-center justify-center">
       <h3 className="text-2xl">Garret Games</h3>
     </main>
   );

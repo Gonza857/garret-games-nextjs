@@ -1,9 +1,21 @@
+import { IoCartOutline } from "react-icons/io5";
+
 export const links = [
   { title: "Inicio", href: "/" },
   { title: "Juegos", href: "/juegos" },
   { title: "PlayStation Plus", href: "/playstationplus" },
   { title: "Tarjetas de regalo", href: "/tarjetasderegalo" },
   { title: "Ayuda", href: "/ayuda" },
+  { title: "Admin", href: "/admin" },
+  { title: <IoCartOutline style={{ fontSize: "1.5rem" }} />, href: "/carrito" },
+];
+
+export const paymentMethods = [
+  "Mercado Pago",
+  "Tarjeta de crédito",
+  "Tarjeta de débito",
+  "Cryptomonedas",
+  "Paypal",
 ];
 
 export const products = [

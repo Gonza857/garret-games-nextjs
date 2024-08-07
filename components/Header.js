@@ -19,10 +19,11 @@ const Header = () => {
             alt="Logo Garret Games"
           />
         </Link>
-        <ul className="flex gap-5">
+        <ul className="flex gap-5 text-white items-center">
           {links.map((link) => (
             <li
               className={`${pathName === link.href ? "bg-cyan-900" : ""} p-2`}
+              key={`${link.href}+${link.title}`}
             >
               <Link
                 key={link.title}

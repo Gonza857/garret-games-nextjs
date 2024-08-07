@@ -2,13 +2,14 @@
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import Button from "../Button";
 
 export const Product = ({ type, data }) => {
   console.log(data);
   const router = useRouter();
   return (
     <div
-      className="bg-white border-4 border-red-500 text-black flex flex-col p-2 gap-2 hover:bg-gray-400 transition-all hover:scale-105"
+      className="bg-white border rounded overflow-hidden text-black flex flex-col justify-between p-2 hover:bg-gray-100 transition-all hover:scale-105 h-80"
       key={data.title}
     >
       {data.category === "giftcard" ? (
@@ -19,7 +20,7 @@ export const Product = ({ type, data }) => {
         </>
       ) : (
         <>
-          <div className="border-blue-500 border-4 w-40 h-40 mx-auto relative">
+          <div className="w-40 h-40 mx-auto relative">
             <Image
               src={data.imageUrl}
               width={1000}
@@ -32,7 +33,11 @@ export const Product = ({ type, data }) => {
       )}
 
       <div className="flex flex-col gap-1">
-        <p className="font-bold">{data.title}</p>
+        <p className="font-semibold">
+          {data.title.length > 40
+            ? data.title.slice(0, 39) + "..."
+            : data.title}
+        </p>
         <p className="text-xs">
           {data.category === "giftcard"
             ? data.region
@@ -40,11 +45,9 @@ export const Product = ({ type, data }) => {
         </p>
         <p>${data.price}</p>
       </div>
-      <button onClick={() => router.replace(`/producto/${data.id}`)}>
+      <Button onClick={() => router.replace(`/producto/${data.id}`)}>
         Agregar al carrito
-      </button>
+      </Button>
     </div>
   );
 };
-
-const ps4 = () => {};

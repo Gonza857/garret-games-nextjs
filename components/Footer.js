@@ -4,7 +4,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="w-full bg-cyan-800 h-80 text-white p-4 flex flex-col gap-3">
+    <footer className="w-full bg-cyan-800 min-h-fit text-white p-4 flex flex-col gap-3">
       <div className="w-10/12 mx-auto flex py-4">
         {/* COL 1 */}
         <div className="w-4/12 flex flex-col gap-3 items-center p-4">
@@ -32,7 +32,11 @@ export const Footer = () => {
         </div>
       </div>
       <hr />
-      <div></div>
+      <div>
+        <p className="text-sm text-center">
+          Desarrollado por Gonzalo Ramos - Coderhouse - Next.js
+        </p>
+      </div>
     </footer>
   );
 };

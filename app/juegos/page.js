@@ -16,10 +16,19 @@ const consoles = [
 const Juegos = ({ params }) => {
   console.log(params);
   return (
-    <main className="pt-20">
-      <div className="border-4 border-red-500 flex gap-4">
+    <main className="pt-20 flex flex-col">
+      <h3 className="font-semibold text-2xl text-center py-4">
+        Juegos digitales
+      </h3>
+      <div className=" w-fit rounded-4 mx-auto border flex justify-center items-center gap-4 h-10 px-2">
+        <p>Consola: </p>
         {consoles.map((c) => (
-          <Link href={`${c.url}`}>{c.slug}</Link>
+          <Link
+            href={`/juegos/${c.url}`}
+            className="text-cyan-800 font-semibold transition-all hover:scale-110"
+          >
+            {c.slug}
+          </Link>
         ))}
       </div>
       <ProductsWrapper>
