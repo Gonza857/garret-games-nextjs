@@ -4,10 +4,13 @@ import Button from "../Button";
 import ProductCounter from "../ProductCounter";
 import Image from "next/image";
 
-const CartProduct = ({ data, quantity, sumarProductos }) => {
+const CartProduct = ({ data, quantity, saberTotal }) => {
+  const handleRestarTotal = (q) => {
+    saberTotal(data.price * q * -1);
+  };
+
   const handleTotal = (q) => {
-    console.log("Cantidad: " + q);
-    // sumarProductos(data, q);
+    saberTotal(data.price * q);
   };
 
   return (
@@ -24,7 +27,7 @@ const CartProduct = ({ data, quantity, sumarProductos }) => {
         <p className="text-cyan-800 font-semibold text-lg">{data.title}</p>
         <div className="flex gap-4 items-center">
           <p>Unidades: </p>
-          <ProductCounter maxStock={data.stock} handleTotal={handleTotal} />
+          <ProductCounter maxStock={data.stock} />
         </div>
         <div className="text-md text-cyan-800 font-semibold">
           Precio total: ${Math.floor(quantity * data.price)}

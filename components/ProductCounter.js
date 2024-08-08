@@ -1,21 +1,17 @@
 "use client";
 import React, { useState } from "react";
 
-const ProductCounter = ({ maxStock, handleTotal }) => {
+const ProductCounter = ({ maxStock }) => {
   const [quantity, setQuantity] = useState(1);
 
   const addQuantity = () => {
-    console.log("Sumando");
     if (quantity >= maxStock) return;
     setQuantity(quantity + 1);
-    handleTotal(quantity + 1);
   };
 
   const substractQuantity = () => {
-    console.log("Restando");
     if (quantity <= 1) return;
     setQuantity(quantity - 1);
-    handleTotal(quantity - 1);
   };
 
   return (

@@ -11,11 +11,13 @@ const Carrito = () => {
   const [total, setTotal] = useState(0);
 
   let copyProducts = [...products];
-  let fiveExampleProducts = copyProducts.splice(40, 5);
+  let fiveExampleProducts = copyProducts.splice(40, 1);
   fiveExampleProducts.forEach((p) => (p.stock = randomStock()));
 
-  const sumarProductos = (product, quantity) => {
-    setTotal((anterior) => anterior + product.price * quantity);
+  const saberTotal = (numero) => {
+    let c = total + numero;
+    console.log(`-------------- TOTAL: ${c} -----------------`);
+    setTotal(c);
   };
 
   return (
@@ -27,14 +29,14 @@ const Carrito = () => {
           {fiveExampleProducts.map((c) => (
             <CartProduct
               data={c}
-              sumarProductos={sumarProductos}
+              saberTotal={saberTotal}
               quantity={quantity}
               key={c.id}
             />
           ))}
         </div>
         <div className="w-full flex justify-end font-semibold text-xl pt-3">
-          Total: ${total}
+          Total: ${"En desarrollo"}
         </div>
       </div>
     </main>
