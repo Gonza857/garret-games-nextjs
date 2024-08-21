@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import Button from "../Button";
+import Link from "next/link";
+import { useCartContext } from "../context/CartContext";
 
 export const Product = ({ type, data }) => {
-  console.log(data);
-  const router = useRouter();
+  const { addToCart } = useCartContext();
   return (
     <div
       className="bg-white border rounded overflow-hidden text-black flex flex-col justify-between p-2 hover:bg-gray-100 transition-all hover:scale-105 h-80"
@@ -20,15 +20,17 @@ export const Product = ({ type, data }) => {
         </>
       ) : (
         <>
-          <div className="w-40 h-40 mx-auto relative">
-            <Image
-              src={data.imageUrl}
-              width={1000}
-              height={1000}
-              alt={data.title + " Image"}
-              className="w-full h-full object-fill"
-            />
-          </div>
+          <Link href={`/producto/${data.category}/${data.id}`}>
+            <div className="w-40 h-40 mx-auto relative">
+              <Image
+                src={data.imageUrl}
+                width={1000}
+                height={1000}
+                alt={data.title + " Image"}
+                className="w-full h-full object-fill"
+              />
+            </div>
+          </Link>
         </>
       )}
 
@@ -45,7 +47,11 @@ export const Product = ({ type, data }) => {
         </p>
         <p>${data.price}</p>
       </div>
-      <Button onClick={() => router.replace(`/producto/${data.id}`)}>
+      <Button
+        onClick={() => {
+          addToCart({ ...data, quantity: 1 });
+        }}
+      >
         Agregar al carrito
       </Button>
     </div>

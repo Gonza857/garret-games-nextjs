@@ -1,21 +1,23 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
+import { useCartContext } from "./context/CartContext";
 
-const ProductCounter = ({ maxStock }) => {
-  const [quantity, setQuantity] = useState(1);
+const ProductCounter = ({ data, setQuantity, maxStock, quantity }) => {
+  const { addToCart, removeSingleUnitFromCart } = useCartContext();
 
   const addQuantity = () => {
-    if (quantity >= maxStock) return;
-    setQuantity(quantity + 1);
+    if (quantity >= maxStock) {
+      return;
+    }
+
+    addToCart({ ...data, quantity: 1 });
   };
 
   const substractQuantity = () => {
-    if (quantity <= 1) return;
-    setQuantity(quantity - 1);
+    removeSingleUnitFromCart(data);
   };
 
   return (
-    <div className="flex border rounded overflow-hidden">
+    <div className="flex border rounded overflow-hidden w-fit">
       <div
         className="bg-cyan-800 w-4 flex items-center justify-center h-8 p-4 cursor-pointer text-white select-none hover:bg-cyan-700"
         onClick={() => substractQuantity()}

@@ -1,43 +1,11 @@
-"use client";
-import React, { useState } from "react";
-import { products } from "../globals";
-
-import { randomStock } from "../producto/[id]/page";
-
-import CartProduct from "@/components/Cart/CartProduct";
+import React from "react";
+import CartBody from "@/components/Cart/CartBody";
 
 const Carrito = () => {
-  const [quantity, setQuantity] = useState(1);
-  const [total, setTotal] = useState(0);
-
-  let copyProducts = [...products];
-  let fiveExampleProducts = copyProducts.splice(40, 1);
-  fiveExampleProducts.forEach((p) => (p.stock = randomStock()));
-
-  const saberTotal = (numero) => {
-    let c = total + numero;
-    console.log(`-------------- TOTAL: ${c} -----------------`);
-    setTotal(c);
-  };
-
   return (
-    <main className="min-h-screen w-full pt-20 flex border-4">
-      <div className="w-6/12 mx-auto flex flex-col">
-        <h3>Carrito de compras</h3>
-        {/*  Products  */}
-        <div className="w-full flex flex-col gap-2">
-          {fiveExampleProducts.map((c) => (
-            <CartProduct
-              data={c}
-              saberTotal={saberTotal}
-              quantity={quantity}
-              key={c.id}
-            />
-          ))}
-        </div>
-        <div className="w-full flex justify-end font-semibold text-xl pt-3">
-          Total: ${"En desarrollo"}
-        </div>
+    <main className="min-h-screen w-full pt-20 flex">
+      <div className="w-6/12 lg:w-10/12 mx-auto flex flex-col p-2">
+        <CartBody />
       </div>
     </main>
   );

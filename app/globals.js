@@ -2,12 +2,28 @@ import { IoCartOutline } from "react-icons/io5";
 
 export const links = [
   { title: "Inicio", href: "/" },
-  { title: "Juegos", href: "/juegos" },
-  { title: "PlayStation Plus", href: "/playstationplus" },
-  { title: "Tarjetas de regalo", href: "/tarjetasderegalo" },
+  { title: "Juegos", href: "/productos/juegos" },
+  { title: "PlayStation Plus", href: "/productos/playstationplus" },
+  { title: "Tarjetas de regalo", href: "/productos/tarjetasderegalo" },
   { title: "Ayuda", href: "/ayuda" },
+  { title: "Contacto", href: "/contacto" },
   { title: "Admin", href: "/admin" },
   { title: <IoCartOutline style={{ fontSize: "1.5rem" }} />, href: "/carrito" },
+];
+
+export const categories = [
+  {
+    name: "Juegos",
+    route: "/productos/juegos",
+  },
+  {
+    name: "PlayStation Plus",
+    route: "/productos/playstationplus",
+  },
+  {
+    name: "Tarjetas de regalo",
+    route: "/productos/tarjetasderegalo",
+  },
 ];
 
 export const paymentMethods = [
@@ -17,6 +33,44 @@ export const paymentMethods = [
   "Cryptomonedas",
   "Paypal",
 ];
+
+/*
+    id: "gc12",
+    title: "Gift Card PlayStation $100",
+    price: 100,
+    region: "usa",
+    value: 100,
+    category: "giftcard",
+    imageUrl: "https://example.com/ps-gift-card-100.jpg",
+
+    id 
+    title
+    price
+    category
+    imageUrl
+
+    value
+    region
+    console
+    duration
+
+    id: "gc1",
+    title: "Gift Card Steam $5",
+    price: 5,
+    region: "arg/usa",
+    value: 5,
+    category: "giftcard",
+    imageUrl: "https://example.com/steam-gift-card-5.jpg",
+
+    id: "sub1",
+    title: "PlayStation Plus Essential - 1 Mes",
+    duration: "1 mes",
+    price: 10,
+    console: ["ps4", "ps5"],
+    category: "subscription",
+    imageUrl:
+      "https://store.playstation.com/store/api/chihiro/00_09_000/container/ES/es/19/1602364/1685101614000/image_wide.jpg",
+*/
 
 export const products = [
   // Suscripciones de PlayStation Plus

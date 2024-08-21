@@ -1,43 +1,47 @@
 import React from "react";
-import { AiFillDelete } from "react-icons/ai";
-import Button from "../Button";
 import ProductCounter from "../ProductCounter";
 import Image from "next/image";
 
-const CartProduct = ({ data, quantity, saberTotal }) => {
-  const handleRestarTotal = (q) => {
-    saberTotal(data.price * q * -1);
-  };
-
-  const handleTotal = (q) => {
-    saberTotal(data.price * q);
-  };
-
+const CartProduct = ({ data, productcQuantity = 0 }) => {
   return (
-    <div className="flex w-full min-h-fit border rounded items-center justify-around">
-      <div className=" w-3/12 flex  justify-center">
-        <Image
-          src={"/images/generic.jpg"}
-          width={100}
-          height={100}
-          alt={data.title}
+    <div className="grid grid-cols-12 w-full min-h-fit border rounded p-2 gap-2">
+      <div className="flex col-span-5 ">
+        <div>
+          <Image
+            src={"/images/generic.jpg"}
+            width={100}
+            height={100}
+            alt={data.title}
+          />
+        </div>
+        <p className="text-cyan-800 font-semibold text-lg p-2">{data.title}</p>
+      </div>
+
+      <div className="col-span-2 flex items-center justify-center">
+        <p>${data.price}</p>
+      </div>
+
+      <div className="p-2 flex items-center justify-center gap-2 col-span-3">
+        <ProductCounter
+          data={data}
+          maxStock={data.stock}
+          setQuantity={handleQuantity}
+          quantity={productcQuantity}
         />
-      </div>
-      <div className="p-2 w-7/12 flex flex-col gap-2">
-        <p className="text-cyan-800 font-semibold text-lg">{data.title}</p>
-        <div className="flex gap-4 items-center">
-          <p>Unidades: </p>
-          <ProductCounter maxStock={data.stock} />
-        </div>
-        <div className="text-md text-cyan-800 font-semibold">
+        {/* <div className="text-md text-cyan-800 font-semibold">
           Precio total: ${Math.floor(quantity * data.price)}
-        </div>
+        </div> */}
       </div>
-      <div className="w-2/12 flex items-center justify-center">
+
+      <div className="col-span-2  flex items-center justify-center">
+        <p>${productcQuantity * data.price}</p>
+      </div>
+
+      {/* <div className="flex items-center justify-center col-span-2">
         <Button>
           <AiFillDelete />
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
