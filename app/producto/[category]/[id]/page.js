@@ -1,20 +1,40 @@
 import { paymentMethods } from "@/app/globals";
 import QuantityHandler from "@/components/Products/QuantityHandler";
+import Image from "next/image";
 import React from "react";
 
+export async function generateMetadata({ params, searchParams }, parent) {
+  const id = params.id;
+  const category = params.category;
+  const singleProduct = await getSingleProduct(id, category);
+  return {
+    title: singleProduct.title,
+  };
+}
+
+const getSingleProduct = async (id, category) => {
+  return await fetch(`http://localhost:3000/api/producto/${category}/${id}`, {
+    cache: "no-store",
+  }).then((r) => r.json());
+};
+
 const ProductDetails = async ({ params }) => {
-  const singleProduct = await fetch(
-    `http://localhost:3000/api/producto/${params.category}/${params.id}`,
-    {
-      cache: "force-cache",
-      next: { revalidate: 3600 },
-    }
-  ).then((r) => r.json());
+  const id = params.id;
+  const category = params.category;
+  const singleProduct = await getSingleProduct(id, category);
 
   return (
     <main className="pt-20 w-full min-h-screen flex items-center">
       <div className="w-10/12 mx-auto flex h-fit gap-4 py-4">
         {/* IZQUIERDA */}
+        <div className="w-4/12">
+          <Image
+            width={500}
+            height={500}
+            src={"/images/generic.jpg"}
+            alt={singleProduct.title}
+          />
+        </div>
         {/* CENTRO */}
         <div className="w-5/12 px-4 flex flex-col border-l-2">
           <p className="text-3xl text-cyan-800 font-semibold">

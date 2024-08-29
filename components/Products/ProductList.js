@@ -7,32 +7,27 @@ const SUBSCRIPTION = "playstationplus";
 const GIFTCARD = "tarjetasderegalo";
 
 const knowCategory = (c) => {
-  // juegos,playstationplus,tarjetaderegalo
   switch (c) {
     case GAMES:
-      return "game";
+      return "games";
     case SUBSCRIPTION:
-      return "subscription";
+      return "subscriptions";
     case GIFTCARD:
-      return "giftcard";
+      return "giftcards";
     default:
       return "todos";
   }
 };
 
-const objOriginal = {
-  cache: "force-cache",
-  next: {
-    tags: ["productos"],
-  },
-};
-
 async function ProductList({ category }) {
-  category = knowCategory(category);
-  const response = await fetch(
-    `http://localhost:3000/api/productos/${category}`,
-    { cache: "no-cache" }
-  ).then((r) => r.json());
+  let c = knowCategory(category);
+  console.log(c);
+  const response = await fetch(`http://localhost:3000/api/productos/${c}`, {
+    cache: "no-store",
+    next: {
+      tags: ["productos"],
+    },
+  }).then((r) => r.json());
   return (
     <ProductsWrapper>
       {response.map((p) => (

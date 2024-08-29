@@ -4,27 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "static1.gamespot.com",
+        hostname: "firebasestorage.googleapis.com",
         port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.cloudflare.steamstatic.com",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "store.playstation.com",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "media.playstation.com",
-        port: "",
-        pathname: "/**",
+        pathname: "/v0/b/garret-games-next.appspot.com/o/**",
       },
     ],
   },

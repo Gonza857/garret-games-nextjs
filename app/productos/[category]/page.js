@@ -11,14 +11,14 @@ const consoles = [
 
 export function generateStaticParams() {
   return [
-    { categoria: "todos" },
-    { categoria: "juegos" },
-    { categoria: "tarjetasderegalo" },
+    { categoria: "" },
+    { categoria: "games" },
     { categoria: "playstationplus" },
+    { categoria: "giftcards" },
   ];
 }
 
-export const revalidate = 3600;
+export const revalidate = 1800;
 
 async function TodosLosProductos({ params }) {
   let needConsoleFilter = false;
