@@ -1,7 +1,7 @@
 import React from "react";
 import { useCartContext } from "./context/CartContext";
 
-const ProductCounter = ({ data, setQuantity, maxStock, quantity }) => {
+const ProductCounter = ({ data, maxStock, quantity }) => {
   const { addToCart, removeSingleUnitFromCart } = useCartContext();
 
   const addQuantity = () => {

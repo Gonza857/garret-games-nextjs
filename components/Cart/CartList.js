@@ -2,6 +2,7 @@
 import React from "react";
 import { useCartContext } from "../context/CartContext";
 import CartEmpty from "./CartEmpy";
+import CartProduct from "./CartProduct";
 const CartList = () => {
   const { cart } = useCartContext();
   return (

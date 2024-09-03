@@ -8,7 +8,7 @@ const CartProduct = ({ data, productcQuantity = 0 }) => {
       <div className="flex col-span-5 ">
         <div>
           <Image
-            src={"/images/generic.jpg"}
+            src={data.image.url}
             width={100}
             height={100}
             alt={data.title}
@@ -25,7 +25,6 @@ const CartProduct = ({ data, productcQuantity = 0 }) => {
         <ProductCounter
           data={data}
           maxStock={data.stock}
-          setQuantity={handleQuantity}
           quantity={productcQuantity}
         />
         {/* <div className="text-md text-cyan-800 font-semibold">

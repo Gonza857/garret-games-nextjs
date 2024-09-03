@@ -3,6 +3,7 @@ import React from "react";
 import { useCartContext } from "../context/CartContext";
 import CartEmpty from "./CartEmpy";
 import CartList from "./CartList";
+import CartTotal from "./CartTotal";
 
 const CartBody = () => {
   const { isCartEmpty } = useCartContext();
@@ -16,7 +17,7 @@ const CartBody = () => {
       ) : (
         <>
           <CartHeader />
-          <CartList />;
+          <CartList />
           <CartTotal />
         </>
       )}
