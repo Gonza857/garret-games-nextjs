@@ -1,16 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import Button from "../Button";
-import { uploadProduct } from "@/helpers/actions";
+import { updateProduct } from "@/helpers/actions";
 import { useParams } from "next/navigation";
 
-const SubscriptionsForm = () => {
+const SubscriptionsForm = ({ product }) => {
   const path = useParams();
   const [isLoading, setIsLoading] = useState(false);
-
   const handleSubmit = async (e) => {
     setIsLoading(true);
-    await uploadProduct(e, path.category)
+    await updateProduct(e, path.category, path.id)
       .then((r) => {
         setIsLoading(!r);
       })
@@ -26,17 +25,19 @@ const SubscriptionsForm = () => {
         <input
           className="w-full p-2 outline-none outline-cyan-800 rounded-sm"
           name="title"
-          placeholder="Titulo de la subscripción"
+          placeholder="Ingresa nombre del juego"
           type="text"
+          defaultValue={product.title}
         />
       </InputsRow>
       <InputsRow>
         <select
           className="w-6/12 p-2 outline-none outline-cyan-800 rounded-sm"
           name="console"
-          defaultValue={"PS4-PS5"}
+          defaultValue={product.console.join("-")}
         >
           <option disabled>Plataforma</option>
+          <option>PS3</option>
           <option>PS4</option>
           <option>PS5</option>
           <option>PS4-PS5</option>
@@ -46,6 +47,7 @@ const SubscriptionsForm = () => {
           name="duration"
           placeholder="Duración"
           type="text"
+          defaultValue={product.duration}
         />
       </InputsRow>
       <InputsRow>
@@ -54,16 +56,16 @@ const SubscriptionsForm = () => {
           name="price"
           placeholder="Precio"
           type="number"
+          defaultValue={product.price}
         />
         <input
           className=" w-6/12 p-2 outline-none outline-cyan-800 rounded-sm"
           name="stock"
           placeholder="Stock"
           type="number"
-          step={1}
+          defaultValue={504}
         />
       </InputsRow>
-      <InputsRow></InputsRow>
       <InputsRow>
         <input type="file" name="img" />
       </InputsRow>

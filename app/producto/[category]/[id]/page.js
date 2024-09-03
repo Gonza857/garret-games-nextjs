@@ -31,7 +31,7 @@ const ProductDetails = async ({ params }) => {
           <Image
             width={500}
             height={500}
-            src={"/images/generic.jpg"}
+            src={singleProduct.image.url}
             alt={singleProduct.title}
           />
         </div>

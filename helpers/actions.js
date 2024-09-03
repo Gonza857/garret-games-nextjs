@@ -1,6 +1,6 @@
 "use server";
 import { db, storage } from "@/firebase/config";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 
@@ -21,59 +21,109 @@ const knowCategory = (c) => {
   }
 };
 
-const pushNewGiftCard = async (formdata) => {
-  let consolesModified = formdata.get("console");
-  const newObject = {
-    title: formdata.get("title"),
-    price: formdata.get("price"),
-    imgUrl: formdata.get("img"),
-    duration: formdata.get("duration"),
+const buildGame = (values) => {
+  let consolesModified = values.get("console");
+  return {
+    title: values.get("title"),
+    console: consolesModified.split("-"),
+    accountType: values.get("accountType"),
+    stock: values.get("stock"),
+    description: values.get("description"),
+    category: "game",
+    price: values.get("price"),
+  };
+};
+
+const buildSubscription = (values) => {
+  let consolesModified = values.get("console");
+  return {
+    title: values.get("title"),
+    price: values.get("price"),
+    duration: values.get("duration"),
     console: consolesModified.split("-"),
     category: "subscription",
   };
 };
 
+const buildGiftCard = (values) => {
+  return {
+    title: values.get("title"),
+    price: values.get("price"),
+    value: values.get("value"),
+    stock: values.get("stock"),
+    region: values.get("region"),
+    category: "giftcard",
+  };
+};
+
 const buildObject = (values, category) => {
-  console.log("me llega categoria", category);
-  if (knowCategory(category) == "games") {
-    let consolesModified = values.get("console");
-    return {
-      title: values.get("title"),
-      console: consolesModified.split("-"),
-      accountType: values.get("accountType"),
-      stock: values.get("stock"),
-      description: values.get("description"),
-      category: "game",
-      price: values.get("price"),
-    };
-  } else if (knowCategory(category) == "subscriptions") {
-    let consolesModified = values.get("console");
-    return {
-      title: values.get("title"),
-      price: values.get("price"),
-      duration: values.get("duration"),
-      console: consolesModified.split("-"),
-      category: "subscription",
-    };
-  } else if (knowCategory(category) == "giftcards") {
-    return {
-      title: values.get("title"),
-      price: values.get("price"),
-      value: values.get("value"),
-      stock: values.get("stock"),
-      region: values.get("region"),
-      category: "giftcard",
-    };
-  }
+  if (knowCategory(category) == "games") return buildGame(values);
+  if (knowCategory(category) == "subscriptions")
+    return buildSubscription(values);
+  if (knowCategory(category) == "giftcards") return buildGiftCard(values);
   return null;
 };
 
-const pushNewSubscripition = async () => {};
+export const updateProduct = async (values, category, id) => {
+  let buildedProduct = buildObject(values, category);
+  buildedProduct.id = id;
+  if (buildedProduct !== null) {
+    if (knowCategory(buildedProduct.category) == "games") {
+      await uploadImage(`games/${id}`, values.get("img"))
+        .then((r) => {
+          buildedProduct.image = {
+            url: r,
+            id: id,
+          };
+          console.log("imagen subida pa");
+        })
+        .catch((e) => {
+          console.log(e.mmessage);
+        });
+
+      const docRef = doc(db, "games", buildedProduct.id);
+      await updateDoc(docRef, buildedProduct);
+      return true;
+    } else if (knowCategory(buildedProduct.category) == "subscriptions") {
+      await uploadImage(`subscriptions/${id}`, values.get("img"))
+        .then((r) => {
+          buildedProduct.image = {
+            url: r,
+            id: id,
+          };
+          console.log("imagen subida pa");
+        })
+        .catch((e) => {
+          console.log(e.mmessage);
+        });
+      const docRef = doc(db, "subscriptions", buildedProduct.id);
+      await updateDoc(docRef, buildedProduct);
+      return true;
+    } else if (knowCategory(buildedProduct.category) == "giftcards") {
+      await uploadImage(`giftcards/${id}`, values.get("img"))
+        .then((r) => {
+          buildedProduct.image = {
+            url: r,
+            id: id,
+          };
+          console.log("imagen subida pa");
+        })
+        .catch((e) => {
+          console.log(e.mmessage);
+        });
+
+      const docRef = doc(db, "giftcards", buildedProduct.id);
+      await updateDoc(docRef, buildedProduct);
+      return true;
+    } else {
+      return null;
+    }
+  }
+};
 
 export const uploadProduct = async (values, category) => {
   const id = v4();
   let buildedProduct = buildObject(values, category);
-  console.log(buildedProduct);
   if (buildedProduct !== null) {
     if (knowCategory(buildedProduct.category) == "games") {
       await uploadImage(`games/${id}`, values.get("img"))

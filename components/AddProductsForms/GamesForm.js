@@ -4,7 +4,7 @@ import Button from "../Button";
 import { uploadProduct } from "@/helpers/actions";
 import { useParams } from "next/navigation";
 
-const GamesForm = () => {
+const GamesForm = ({ game }) => {
   const path = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
@@ -28,7 +28,6 @@ const GamesForm = () => {
           name="title"
           placeholder="Ingresa nombre del juego"
           type="text"
-          value={"Gran Turismo Sport"}
         />
       </InputsRow>
       <InputsRow>
@@ -60,14 +59,12 @@ const GamesForm = () => {
           name="price"
           placeholder="Precio"
           type="number"
-          value={50.99}
         />
         <input
           className="p-2 outline-none outline-cyan-800 rounded-sm"
           name="stock"
           placeholder="Stock"
           type="number"
-          value={8}
         />
       </InputsRow>
       <InputsRow>

@@ -25,5 +25,5 @@ export async function GET(req, { params }) {
   let c = knowCategory(category);
   const docRef = doc(db, c, id);
   const docSnapshot = await getDoc(docRef);
-  return NextResponse.json({ ...docSnapshot.data() });
+  return NextResponse.json({ ...docSnapshot.data(), id: docSnapshot.id });
 }

@@ -8,7 +8,7 @@ import { useCartContext } from "./context/CartContext";
 
 const Header = () => {
   const pathName = usePathname();
-  const { isCartEmpty } = useCartContext();
+  const { isCartEmpty, cart } = useCartContext();
 
   return (
     <header className="w-full h-20 border border-cyan-500 fixed z-50 bg-cyan-800">

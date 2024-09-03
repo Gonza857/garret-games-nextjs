@@ -6,15 +6,12 @@ import { useParams } from "next/navigation";
 
 const GiftcardsForm = () => {
   const path = useParams();
-  console.log(path);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
-    console.log(e.get("img"));
     await uploadProduct(e, path.category)
       .then((r) => {
-        console.log("respuesta: ", r);
         setIsLoading(!r);
       })
       .catch((r) => console.log(r));
@@ -29,9 +26,8 @@ const GiftcardsForm = () => {
         <input
           className="w-full p-2 outline-none outline-cyan-800 rounded-sm"
           name="title"
-          placeholder="Ingresa nombre del juego"
+          placeholder="Titulo de la tarjeta de regalo"
           type="text"
-          value={"Steam Wallet Gift Card $5 USD"}
         />
       </InputsRow>
       <InputsRow>
@@ -52,7 +48,6 @@ const GiftcardsForm = () => {
           name="value"
           placeholder="Valor"
           type="text"
-          value={"5"}
         />
       </InputsRow>
       <InputsRow>
@@ -61,14 +56,13 @@ const GiftcardsForm = () => {
           name="price"
           placeholder="Precio"
           type="number"
-          value={50.99}
+          step={1}
         />
         <input
           className=" w-6/12 p-2 outline-none outline-cyan-800 rounded-sm"
           name="stock"
           placeholder="Stock"
           type="number"
-          value={8}
         />
       </InputsRow>
       <InputsRow></InputsRow>

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
+import Link from "next/link";
 import Button from "../Button";
 
 const SubscriptionsTable = ({ subscriptions, handleDeleteProduct }) => {
@@ -41,9 +42,11 @@ const SubscriptionsTable = ({ subscriptions, handleDeleteProduct }) => {
                 <Button onClick={async () => await handleDeleteProduct(s)}>
                   <FaTrash />
                 </Button>
-                <Button>
-                  <FaPen />
-                </Button>
+                <Link href={`/admin/editar-producto/${s.category}/${s.id}`}>
+                  <Button>
+                    <FaPen />
+                  </Button>
+                </Link>
               </td>
             </tr>
           );

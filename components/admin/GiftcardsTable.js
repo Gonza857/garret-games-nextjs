@@ -2,6 +2,7 @@
 import React from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
 import Button from "../Button";
+import Link from "next/link";
 
 const GiftcardsTable = ({ giftcards, handleDeleteProduct }) => {
   return (
@@ -45,9 +46,11 @@ const GiftcardsTable = ({ giftcards, handleDeleteProduct }) => {
                 <Button onClick={async () => await handleDeleteProduct(s)}>
                   <FaTrash />
                 </Button>
-                <Button>
-                  <FaPen />
-                </Button>
+                <Link href={`/admin/editar-producto/${s.category}/${s.id}`}>
+                  <Button>
+                    <FaPen />
+                  </Button>
+                </Link>
               </td>
             </tr>
           );

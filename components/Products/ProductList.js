@@ -1,40 +1,41 @@
 import React from "react";
 import ProductsWrapper from "./ProductsWrapper";
 import { Product } from "./Product";
+import Link from "next/link";
 
-const GAMES = "juegos";
-const SUBSCRIPTION = "playstationplus";
-const GIFTCARD = "tarjetasderegalo";
+const consoles = [
+  { url: "ps3", slug: "PS3" },
+  { url: "ps4", slug: "PS4" },
+  { url: "ps5", slug: "PS5" },
+];
 
-const knowCategory = (c) => {
-  switch (c) {
-    case GAMES:
-      return "games";
-    case SUBSCRIPTION:
-      return "subscriptions";
-    case GIFTCARD:
-      return "giftcards";
-    default:
-      return "todos";
-  }
-};
-
-async function ProductList({ category }) {
-  let c = knowCategory(category);
-  console.log(c);
-  const response = await fetch(`http://localhost:3000/api/productos/${c}`, {
-    cache: "no-store",
-    next: {
-      tags: ["productos"],
-    },
-  }).then((r) => r.json());
+async function ProductList({ category, products }) {
   return (
-    <ProductsWrapper>
-      {response.map((p) => (
-        <Product data={p} key={p.id} />
-      ))}
-    </ProductsWrapper>
+    <>
+      {category == "games" && <ConsoleCategories />}
+      <ProductsWrapper>
+        {products.map((p) => (
+          <Product data={p} key={p.id} />
+        ))}
+      </ProductsWrapper>
+    </>
   );
 }
+
+const ConsoleCategories = () => {
+  return (
+    <div className=" w-fit rounded-4 mx-auto border flex justify-center items-center gap-4 h-10 px-2">
+      <p>Consola: </p>
+      {consoles.map((c) => (
+        <Link
+          href={`/productos/juegos/${c.url}`}
+          className="text-cyan-800 font-semibold transition-all hover:scale-110"
+        >
+          {c.slug}
+        </Link>
+      ))}
+    </div>
+  );
+};
 
 export default ProductList;

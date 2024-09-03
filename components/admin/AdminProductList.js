@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "@/firebase/config";
+import { db, storage } from "@/firebase/config";
 import SubscriptionsTable from "./SubscriptionsTable";
 import GamesTable from "./GamesTable";
 import GiftcardsForm from "../AddProductsForms/GiftcardsForm";
 import GiftcardsTable from "./GiftcardsTable";
+import { deleteObject, ref } from "firebase/storage";
 
 const GAMES = "game";
 const SUBSCRIPTION = "subscription";
@@ -23,13 +24,27 @@ const knowCategory = (c) => {
   }
 };
 
+const deleteProductImage = async (id, category) => {
+  let aux = false;
+  const desertRef = ref(storage, `${knowCategory(category)}/${id}`);
+  deleteObject(desertRef).then(() => {
+    aux = true;
+  });
+  return aux;
+};
+
 async function handleDeleteProduct(product) {
   "use server";
   console.log("eliminando", product.id);
   let c = knowCategory(product.category);
   await deleteDoc(doc(db, c, product.id))
     .then(() => {
-      console.log("Eliminado joya pa");
+      console.log("Eliminé producto");
+      deleteProductImage(product.image.id, product.category)
+        .then(() => {
+          console.log("Eliminé imagen");
+        })
+        .catch((e) => console.log(e.message));
     })
     .catch((e) => {
       console.log(e.message);
