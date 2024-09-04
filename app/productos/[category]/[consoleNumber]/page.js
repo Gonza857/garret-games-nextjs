@@ -31,17 +31,15 @@ const getCategoryTextForUser = (category) => {
   }
 };
 
-// export function generateStaticParams() {
-//   return [
-//     { category: "" },
-//     { category: "games" },
-//     { category: "playstationplus" },
-//     { category: "giftcards" },
-//     { console: "ps3" },
-//     { console: "ps4" },
-//     { console: "ps5" },
-//   ];
-// }
+export function generateStaticParams() {
+  return [
+    { consoleNumber: "ps3" },
+    { consoleNumber: "ps4" },
+    { consoleNumber: "ps5" },
+  ];
+}
+
+export const revalidate = 900;
 
 const Juegos = async ({ params }) => {
   let c = knowCategory(params.category);

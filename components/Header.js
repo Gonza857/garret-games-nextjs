@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <header className="w-full h-20 border border-cyan-500 fixed z-50 bg-cyan-800">
       <div className="w-10/12 mx-auto h-full flex justify-between items-center">
-        <Link href={"/"}>
+        <Link href={"/"} className="rounded-full overflow-hidden">
           <Image
             src={"/images/logo-nuevo.png"}
             width={60}

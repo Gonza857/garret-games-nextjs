@@ -9,7 +9,16 @@ const consoles = [
   { url: "ps5", slug: "PS5" },
 ];
 
-async function ProductList({ category, products }) {
+async function ProductList({ category = "/" }) {
+  console.log("me llega:", category);
+  const products = await fetch(
+    `http://localhost:3000/api/productos${category}`,
+    {
+      cache: "no-store",
+      next: {},
+    }
+  ).then((r) => r.json());
+
   return (
     <>
       {category == "games" && <ConsoleCategories />}

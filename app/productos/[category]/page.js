@@ -7,7 +7,7 @@ const getCategoryTextForUser = (category) => {
   switch (category) {
     case "tarjetasderegalo":
       return "Tarjetas de regalo";
-    case "subscriptions":
+    case "playstationplus":
       return "PlayStation Plus";
     case "juegos":
       return "juegos";
@@ -35,30 +35,23 @@ const knowCategory = (c) => {
 
 export function generateStaticParams() {
   return [
-    { category: "" },
-    { category: "games" },
+    { category: "juegos" },
     { category: "playstationplus" },
-    { category: "giftcards" },
+    { category: "tarjetasderegalo" },
   ];
 }
 
-export const revalidate = 1800;
+export const revalidate = 900;
 
 async function TodosLosProductos({ params }) {
   let c = knowCategory(params.category);
-  const products = await fetch(`http://localhost:3000/api/productos/${c}`, {
-    cache: "no-store",
-    next: {
-      tags: ["productos"],
-    },
-  }).then((r) => r.json());
 
   return (
     <main className="pt-20 flex flex-col items-center min-h-screen">
       <h3 className="text-2xl py-2">
         Estas visualizando {getCategoryTextForUser(params.category)}
       </h3>
-      <ProductList category={c} products={products} />
+      <ProductList category={`/${c}`} />
     </main>
   );
 }
