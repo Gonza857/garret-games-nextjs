@@ -1,18 +1,48 @@
 "use client";
 import React, { useState } from "react";
 import Button from "../Button";
-import { uploadProduct } from "@/helpers/actions";
+import { uploadProduct } from "@/actions/actions";
 import { useParams } from "next/navigation";
 
 const GiftcardsForm = () => {
-  const path = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [actualImage, setActualImage] = useState(product.image || "");
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result); // Asigna la imagen leída como preview
+        setActualImage("new uploaded");
+      };
+      reader.readAsDataURL(file); // Lee el archivo como una URL de datos
+    }
+  };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
-    await uploadProduct(e, path.category)
+    let updatedValues = getFormValues(e.target);
+    let isImageChanged = false;
+    if (actualImage == product.image) {
+      // console.log("No la cambió");
+      updatedValues.image = product.image;
+    } else if (actualImage == "new uploaded") {
+      // console.log("no es la misma, la actualizamos");
+      isImageChanged = true;
+      updatedValues.image = imagePreview;
+    } else if (actualImage == "") {
+      // console.log("la borramos y dejamos una por defecto");
+      throwAlert();
+    }
+    updatedValues.category = product.category;
+    updatedValues.id = product.id;
+    updatedValues.console = updatedValues.console.split("-");
+    await Firebase.postProductAndImage(updatedValues, isImageChanged)
       .then((r) => {
-        setIsLoading(!r);
+        setIsLoading(false);
       })
       .catch((r) => console.log(r));
   };

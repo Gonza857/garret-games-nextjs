@@ -1,5 +1,6 @@
 import AdminProductList from "@/components/admin/AdminProductList";
 import Button from "@/components/Button";
+import LogoutButton from "@/components/LogoutButton";
 import Link from "next/link";
 import React, { Suspense } from "react";
 
@@ -25,6 +26,7 @@ const Admin = () => {
             <Button>Agregar {o.name}</Button>
           </Link>
         ))}
+        <LogoutButton />
       </div>
       <div className="w-10/12 flex items-center justify-center">
         <AdminProductList />

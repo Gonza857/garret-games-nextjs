@@ -14,13 +14,16 @@ const page = async ({ params }) => {
   const category = params.category;
   const product = await getSingleProduct(id, category);
   return (
-    <div className="pt-24 border-4 border-red-600 flex justify-center">
-      {params.category == "game" && <GamesForm product={product} />}
-      {params.category == "subscription" && (
-        <SubscriptionsForm product={product} />
-      )}
-      {params.category == "giftcard" && <GiftcardsForm product={product} />}
-    </div>
+    <main className="pt-24 border-4 border-red-600 flex justify-center min-h-screen">
+      <div className="w-2/12 border-8"></div>
+      <div className="w-10/12 border-8 p-4 flex justify-center">
+        {params.category == "game" && <GamesForm product={product} />}
+        {params.category == "subscription" && (
+          <SubscriptionsForm product={product} />
+        )}
+        {params.category == "giftcard" && <GiftcardsForm product={product} />}
+      </div>
+    </main>
   );
 };
 

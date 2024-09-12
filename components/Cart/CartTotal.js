@@ -7,7 +7,7 @@ const CartTotal = () => {
 
   return (
     <div className="w-full flex justify-end font-semibold text-xl p-3">
-      Total: ${total}
+      Total: ${total.toFixed(2)}
     </div>
   );
 };

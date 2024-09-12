@@ -1,9 +1,23 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
 
 const toastSuccess = (message) => {
   toast.success(message, {
+    position: "top-center",
+    autoClose: 2500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+  });
+};
+
+const toastError = (message) => {
+  toast.error(message, {
     position: "top-center",
     autoClose: 2500,
     hideProgressBar: false,
@@ -24,22 +38,65 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const addToCart = (item) => {
-    if (alreadyExistsOnCart(item)) {
-      setCart(
-        [...cart].map((p) => {
-          if (p.id == item.id) {
-            p.quantity += item.quantity;
-          }
-          return p;
-        })
-      );
-      setTotal(total + item.quantity * item.price);
+  useEffect(() => {
+    console.log("cart actualizado");
+  }, [cart]);
+
+  const addToCart = (item, isFromDetailView = true) => {
+    // let existsOnCart = alreadyExistsOnCart(item);
+    // let canBuyMore = canAddMoreUnits(item);
+
+    let cartItem = getCartItem(item);
+
+    if (cartItem !== undefined) {
+      if (cartItem.stock - cartItem.quantity > 0) {
+        console.log(`Stock: ${cartItem.stock}`);
+        console.log(`En carrito:: ${cartItem.quantity}`);
+        console.log(`Restan: ${cartItem.stock - cartItem.quantity}`);
+        setCart(
+          [...cart].map((p) => {
+            if (p.id == item.id) {
+              p.quantity += item.quantity;
+            }
+            return p;
+          })
+        );
+        setTotal(total + item.quantity * item.price);
+      } else {
+        console.log("te queres llevar más y podes tranqui");
+      }
     } else {
       setTotal(total + item.quantity * item.price);
       setCart([...cart, item]);
     }
-    toastSuccess("Añadido al carrito correctamente");
+
+    // if (alreadyExistsOnCart(item)) {
+    //   if (canAddMoreUnits(item.id)) {
+    //
+    //   } else {
+    //     toastError("No podes llevar más de las que hay");
+    //   }
+    // } else {
+    //   setTotal(total + item.quantity * item.price);
+    //   setCart([...cart, item]);
+    // }
+    // if (isFromDetailView)
+    //   toastSuccess(
+    //     `Se añadió ${item.quantity} unidad/es del producto al carrito correctamente`
+    //   );
+  };
+
+  const canAddMoreUnits = (item) => {
+    let canAdd = false;
+    let buscado = getCartItem(item);
+    console.log("me llega el item:");
+    console.log(buscado);
+    if (buscado != undefined) {
+      if (buscado.quantity <= buscado.stock) {
+        canAdd = true;
+      }
+    }
+    return canAdd;
   };
 
   const alreadyExistsOnCart = (item) => {
@@ -91,6 +148,7 @@ export const CartProvider = ({ children }) => {
     total,
     removeSingleUnitFromCart,
     isCartEmpty,
+    getCartItem,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

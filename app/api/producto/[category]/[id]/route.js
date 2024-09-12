@@ -1,6 +1,7 @@
 import { products } from "@/app/globals";
 import { db } from "@/firebase/config";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 const GAMES = "game";
@@ -25,5 +26,8 @@ export async function GET(req, { params }) {
   let c = knowCategory(category);
   const docRef = doc(db, c, id);
   const docSnapshot = await getDoc(docRef);
+
+  revalidatePath("/admin/editar-producto/[category]/[id]");
+  revalidatePath("/producto/[category]/[id]");
   return NextResponse.json({ ...docSnapshot.data(), id: docSnapshot.id });
 }

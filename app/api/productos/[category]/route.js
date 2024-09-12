@@ -10,7 +10,7 @@ export const GET = async (request, { params }) => {
   const docs = querySnapshot.docs.map((d) => {
     return { ...d.data(), id: d.id };
   });
-  revalidateTag("productos");
-  // revalidatePath("/productos/[category]");
+  // revalidateTag("productos");
+  revalidatePath("/productos/[category]");
   return NextResponse.json(docs);
 };

@@ -40,7 +40,7 @@ async function handleDeleteProduct(product) {
   await deleteDoc(doc(db, c, product.id))
     .then(() => {
       console.log("Eliminé producto");
-      deleteProductImage(product.image.id, product.category)
+      deleteProductImage(product.id, product.category)
         .then(() => {
           console.log("Eliminé imagen");
         })

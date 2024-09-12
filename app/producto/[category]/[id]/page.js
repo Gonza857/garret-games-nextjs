@@ -22,16 +22,17 @@ const ProductDetails = async ({ params }) => {
   const id = params.id;
   const category = params.category;
   const singleProduct = await getSingleProduct(id, category);
+  singleProduct.stock = Number(singleProduct.stock);
 
   return (
-    <main className="pt-20 w-full min-h-screen flex items-center">
+    <main className="pt-24 w-full min-h-screen flex">
       <div className="w-10/12 mx-auto flex h-fit gap-4 py-4">
         {/* IZQUIERDA */}
         <div className="w-4/12">
           <Image
-            width={500}
-            height={500}
-            src={singleProduct.image.url}
+            width={1000}
+            height={1000}
+            src={singleProduct.image}
             alt={singleProduct.title}
           />
         </div>
@@ -56,7 +57,9 @@ const ProductDetails = async ({ params }) => {
           </p>
           <p>Stock: {singleProduct.stock}</p>
 
-          <p className="text-sm">Descripcion: {singleProduct.description}</p>
+          <p className="text-sm whitespace-pre-wrap">
+            Descripcion: {singleProduct.description}
+          </p>
         </div>
         {/* DERECHA */}
         <div className="w-3/12 border-l-2 px-4 flex flex-col gap-2">

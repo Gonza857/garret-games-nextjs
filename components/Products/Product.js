@@ -16,7 +16,7 @@ export const Product = ({ type, data }) => {
       <Link href={`/producto/${data.category}/${data.id}`}>
         <div className="w-40 h-48 mx-auto rounded-md p-1">
           <Image
-            src={data.image.url}
+            src={data.image || "/images/no-image.jpg"}
             width={1000}
             height={1000}
             alt={data.title + " Image"}

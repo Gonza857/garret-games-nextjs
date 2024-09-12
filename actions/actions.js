@@ -3,72 +3,15 @@ import { db, storage } from "@/firebase/config";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-
-const GAMES = "game";
-const SUBSCRIPTION = "subscription";
-const GIFTCARD = "giftcard";
-
-const knowCategory = (c) => {
-  switch (c) {
-    case GAMES:
-      return "games";
-    case SUBSCRIPTION:
-      return "subscriptions";
-    case GIFTCARD:
-      return "giftcards";
-    default:
-      return "todos";
-  }
-};
-
-const buildGame = (values) => {
-  let consolesModified = values.get("console");
-  return {
-    title: values.get("title"),
-    console: consolesModified.split("-"),
-    accountType: values.get("accountType"),
-    stock: values.get("stock"),
-    description: values.get("description"),
-    category: "game",
-    price: values.get("price"),
-  };
-};
-
-const buildSubscription = (values) => {
-  let consolesModified = values.get("console");
-  return {
-    title: values.get("title"),
-    price: values.get("price"),
-    duration: values.get("duration"),
-    console: consolesModified.split("-"),
-    category: "subscription",
-  };
-};
-
-const buildGiftCard = (values) => {
-  return {
-    title: values.get("title"),
-    price: values.get("price"),
-    value: values.get("value"),
-    stock: values.get("stock"),
-    region: values.get("region"),
-    category: "giftcard",
-  };
-};
-
-const buildObject = (values, category) => {
-  if (knowCategory(category) == "games") return buildGame(values);
-  if (knowCategory(category) == "subscriptions")
-    return buildSubscription(values);
-  if (knowCategory(category) == "giftcards") return buildGiftCard(values);
-  return null;
-};
+import { buildObject } from "../helpers/product-builders";
+import { getDataBaseCategory } from "../helpers/categories";
+import { Firebase } from "@/components/classes/Firebase";
 
 export const updateProduct = async (values, category, id) => {
   let buildedProduct = buildObject(values, category);
   buildedProduct.id = id;
   if (buildedProduct !== null) {
-    if (knowCategory(buildedProduct.category) == "games") {
+    if (getDataBaseCategory(buildedProduct.category) == "games") {
       await uploadImage(`games/${id}`, values.get("img"))
         .then((r) => {
           buildedProduct.image = {
@@ -84,7 +27,9 @@ export const updateProduct = async (values, category, id) => {
       const docRef = doc(db, "games", buildedProduct.id);
       await updateDoc(docRef, buildedProduct);
       return true;
-    } else if (knowCategory(buildedProduct.category) == "subscriptions") {
+    } else if (
+      getDataBaseCategory(buildedProduct.category) == "subscriptions"
+    ) {
       await uploadImage(`subscriptions/${id}`, values.get("img"))
         .then((r) => {
           buildedProduct.image = {
@@ -99,7 +44,7 @@ export const updateProduct = async (values, category, id) => {
       const docRef = doc(db, "subscriptions", buildedProduct.id);
       await updateDoc(docRef, buildedProduct);
       return true;
-    } else if (knowCategory(buildedProduct.category) == "giftcards") {
+    } else if (getDataBaseCategory(buildedProduct.category) == "giftcards") {
       await uploadImage(`giftcards/${id}`, values.get("img"))
         .then((r) => {
           buildedProduct.image = {
@@ -122,61 +67,14 @@ export const updateProduct = async (values, category, id) => {
 };
 
 export const uploadProduct = async (values, category) => {
-  const id = v4();
   let buildedProduct = buildObject(values, category);
   if (buildedProduct !== null) {
-    if (knowCategory(buildedProduct.category) == "games") {
-      await uploadImage(`games/${id}`, values.get("img"))
-        .then((r) => {
-          buildedProduct.image = {
-            url: r,
-            id: id,
-          };
-          console.log("imagen subida pa");
-        })
-        .catch((e) => {
-          console.log(e.mmessage);
-        });
-
-      const docref = collection(db, "games");
-      let result = await addDoc(docref, { ...buildedProduct });
-      console.log(result.id);
-      return true;
-    } else if (knowCategory(buildedProduct.category) == "subscriptions") {
-      await uploadImage(`subscriptions/${id}`, values.get("img"))
-        .then((r) => {
-          buildedProduct.image = {
-            url: r,
-            id: id,
-          };
-          console.log("imagen subida pa");
-        })
-        .catch((e) => {
-          console.log(e.mmessage);
-        });
-      const docref = collection(db, "subscriptions");
-      let result = await addDoc(docref, { ...buildedProduct });
-      console.log(result.id);
-      return true;
-    } else if (knowCategory(buildedProduct.category) == "giftcards") {
-      await uploadImage(`giftcards/${id}`, values.get("img"))
-        .then((r) => {
-          buildedProduct.image = {
-            url: r,
-            id: id,
-          };
-          console.log("imagen subida pa");
-        })
-        .catch((e) => {
-          console.log(e.mmessage);
-        });
-      const docref = collection(db, "giftcards");
-      let result = await addDoc(docref, { ...buildedProduct });
-      console.log(result.id);
-      return true;
-    } else {
-      return null;
-    }
+    await Firebase.postProductAndImage(buildedProduct)
+      .then(() => {
+        console.log("Todo OK amigo");
+      })
+      .catch((e) => console.log(e));
+    return true;
   }
 };
 

@@ -1,25 +1,14 @@
 "use client";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/components/context/AuthContext";
-import { tryLogin } from "@/helpers/actions";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Login = () => {
-  const { registerUser } = useAuthContext();
+  const { registerUser, loginUser, googleLogin } = useAuthContext();
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const handleLogin = async (data) => {
-    const router = useRouter();
-
-    // await tryLogin(data).then((r) => {
-    //   if (r) {
-    //     router.replace("/");
-    //   }
-    // });
-  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -53,8 +42,9 @@ const Login = () => {
             onChange={handleChange}
           />
 
-          <Button>Iniciar</Button>
+          <Button onClick={() => loginUser(values)}>Iniciar</Button>
           <Button onClick={() => registerUser(values)}>Registrar</Button>
+          <Button onClick={() => googleLogin()}>Googlearse</Button>
         </form>
       </div>
     </main>

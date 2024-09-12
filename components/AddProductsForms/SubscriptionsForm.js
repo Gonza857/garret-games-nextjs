@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Button from "../Button";
-import { uploadProduct } from "@/helpers/actions";
+import { uploadProduct } from "@/actions/actions";
 import { useParams } from "next/navigation";
 
 const SubscriptionsForm = () => {
