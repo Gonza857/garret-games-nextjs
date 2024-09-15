@@ -29,11 +29,12 @@ const getFormValues = (eTarget) => {
   return {
     title: formData.get("title"),
     accountType: formData.get("accountType"),
-    console: formData.get("console"),
+    console: formData.get("console").split("-"),
     price: formData.get("price"),
     stock: Number(formData.get("stock")),
     description: formData.get("description"),
     image: formData.get("image"),
+    category: "game",
   };
 };
 
@@ -70,11 +71,9 @@ const GamesForm = ({ product }) => {
       // console.log("la borramos y dejamos una por defecto");
       throwAlert();
     }
-    updatedValues.category = product.category;
     updatedValues.id = product.id;
-    updatedValues.console = updatedValues.console.split("-");
-    await Firebase.postProductAndImage(updatedValues, isImageChanged)
-      .then((r) => {
+    await Firebase.updateProduct(updatedValues, isImageChanged)
+      .then(() => {
         setIsLoading(false);
       })
       .catch((r) => console.log(r));

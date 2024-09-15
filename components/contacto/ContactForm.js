@@ -20,7 +20,7 @@ const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 border flex flex-col gap-4 w-60 m-2"
+      className="p-4 border flex flex-col gap-5 w-80 m-2"
     >
       <input
         type="email"

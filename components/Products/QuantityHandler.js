@@ -63,8 +63,6 @@ const HandleCounterDesign = ({
       />
     );
   } else if (thisItem.quantity == thisItem.stock) {
-    console.log(`thisItem.quantity: ${thisItem.quantity}`);
-    console.log(`thisItem.stock: ${thisItem.stock}`);
     return (
       <>
         <p className="text-sm">No hay más productos disponibles</p>

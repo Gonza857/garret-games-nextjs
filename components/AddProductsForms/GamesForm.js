@@ -2,60 +2,38 @@
 import React, { useState } from "react";
 import Button from "../Button";
 import { useParams } from "next/navigation";
-import { Firebase } from "../classes/Firebase";
 import { buildObject } from "@/helpers/product-builders";
+import Firebase from "../classes/Firebase";
 
-const uploadProduct = async (values, category) => {
-  let buildedProduct = buildObject(values, category);
-  if (buildedProduct !== null) {
-    await Firebase.postProductAndImage(buildedProduct)
-      .then(() => {
-        console.log("Todo OK amigo");
-      })
-      .catch((e) => console.log(e));
-    return true;
-  }
+const uploadProduct = async (values, isUsingImage) => {
+  await Firebase.postProductAndImage(values, isUsingImage)
+    .then(() => {
+      console.log("Todo OK amigo");
+    })
+    .catch((e) => console.log(e));
+  return true;
+};
+
+let getDataForm = (eTarget, category) => {
+  let n = new FormData(eTarget);
+  return buildObject(n, category);
 };
 
 const GamesForm = ({ game }) => {
   const path = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [values, setValues] = useState({
-    title: "",
-    accountType: "",
-    console: "",
-    price: 0,
-    stock: 0,
-    description: "",
-    image: null,
-  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let formData = new FormData(e.target);
-    const updatedValues = {
-      title: formData.get("title"),
-      accountType: formData.get("accountType"),
-      console: formData.get("console"),
-      price: formData.get("price"),
-      stock: Number(formData.get("stock")),
-      description: formData.get("description"),
-      image: formData.get("image"),
-    };
-    setValues(updatedValues);
-    console.log(updatedValues.image);
-    if (updatedValues.image.size == 0) {
-      console.log("No hay imagen");
-    } else {
-      console.log("hay imagen");
-    }
-    // setIsLoading(true);
-    // await uploadProduct(e, path.category)
-    //   .then((r) => {
-    //     console.log("respuesta: ", r);
-    //     setIsLoading(!r);
-    //   })
-    //   .catch((r) => console.log(r));
+    setIsLoading(true);
+    let isUsingImage = false;
+    let formData = getDataForm(e.target, path.category);
+    if (formData.image != null) isUsingImage = true;
+    await uploadProduct(formData, isUsingImage)
+      .then((r) => {
+        setIsLoading(!r);
+      })
+      .catch((r) => console.log(r));
   };
 
   return (
@@ -122,15 +100,9 @@ const GamesForm = ({ game }) => {
         ></textarea>
       </InputsRow>
       <InputsRow>
-        <input
-          type="file"
-          name="img"
-          onChange={(e) => {
-            console.log(e.target.value);
-          }}
-        />
+        <input type="file" name="image" />
       </InputsRow>
-      <Button>Agregar</Button>
+      <Button>{isLoading ? "Enviando" : "Agregar"}</Button>
     </form>
   );
 };

@@ -2,13 +2,16 @@ import { IoCartOutline } from "react-icons/io5";
 
 export const links = [
   { title: "Inicio", href: "/" },
-  { title: "Juegos", href: "/productos/juegos" },
-  { title: "PlayStation Plus", href: "/productos/playstationplus" },
-  { title: "Tarjetas de regalo", href: "/productos/tarjetasderegalo" },
-  { title: "Ayuda", href: "/ayuda" },
-  { title: "Contacto", href: "/contacto" },
+  { title: "Juegos", href: "/pages/productos/juegos" },
+  { title: "PlayStation Plus", href: "/pages/productos/playstationplus" },
+  { title: "Tarjetas de regalo", href: "/pages/productos/tarjetasderegalo" },
+  { title: "Ayuda", href: "/pages/ayuda" },
+  { title: "Contacto", href: "/pages/contacto" },
   { title: "Admin", href: "/admin" },
-  { title: <IoCartOutline style={{ fontSize: "1.5rem" }} />, href: "/carrito" },
+  {
+    title: <IoCartOutline style={{ fontSize: "1.5rem" }} />,
+    href: "/pages/carrito",
+  },
 ];
 
 export const categories = [

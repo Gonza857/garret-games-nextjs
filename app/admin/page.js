@@ -26,6 +26,9 @@ const Admin = () => {
             <Button>Agregar {o.name}</Button>
           </Link>
         ))}
+        <Link href={"/admin/ordenes"}>
+          <Button>Ver ordenes</Button>
+        </Link>
         <LogoutButton />
       </div>
       <div className="w-10/12 flex items-center justify-center">

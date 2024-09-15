@@ -33,3 +33,13 @@ body {
 .cardHeader { 
 background-color: rgb( 0, 112, 204);
 }
+
+.productCard {
+  height: 300px;
+}
+
+@media screen and (min-width: 720px) {
+  .productCard{
+  height: 360px;
+  }
+}

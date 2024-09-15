@@ -8,34 +8,33 @@ const buildGiftCard = (values) => {
     stock: values.get("stock"),
     region: values.get("region"),
     category: "giftcard",
-    image: values.get("img"),
+    image: values.get("image"),
   };
 };
 
 const buildSubscription = (values) => {
-  let consolesModified = values.get("console");
   return {
     title: values.get("title"),
     price: values.get("price"),
     duration: values.get("duration"),
-    console: consolesModified.split("-"),
+    console: values.get("console").split("-"),
     category: "subscription",
     stock: values.get("stock"),
-    image: values.get("img"),
+    image: values.get("image"),
   };
 };
 
 const buildGame = (values) => {
-  let consolesModified = values.get("console");
   return {
     title: values.get("title"),
-    console: consolesModified.split("-"),
     accountType: values.get("accountType"),
-    stock: values.get("stock"),
-    description: values.get("description"),
-    category: "game",
+    console: values.get("console"),
+    console: values.get("console").split("-"),
     price: values.get("price"),
-    image: values.get("img"),
+    stock: Number(values.get("stock")),
+    description: values.get("description"),
+    image: values.get("image"),
+    category: "game",
   };
 };
 

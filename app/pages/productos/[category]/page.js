@@ -1,6 +1,5 @@
-import CategoriesMenu from "@/components/CategoriesMenu";
 import ProductList from "@/components/Products/ProductList";
-import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 const getCategoryTextForUser = (category) => {
@@ -12,7 +11,7 @@ const getCategoryTextForUser = (category) => {
     case "juegos":
       return "juegos";
     default:
-      return "Error";
+      notFound();
   }
 };
 
@@ -42,6 +41,15 @@ export function generateStaticParams() {
 }
 
 export const revalidate = 900;
+
+export async function generateMetadata({ params }) {
+  return {
+    title: `${getCategoryTextForUser(params.category)} | Garret Games`,
+    description: `Categoria ${getCategoryTextForUser(
+      params.category
+    )} - Productos originales, garantía asegurada y soporte personalizado.`,
+  };
+}
 
 async function TodosLosProductos({ params }) {
   let c = knowCategory(params.category);

@@ -1,16 +1,18 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { getProductCategory } from "@/helpers/categories";
 
 export const GET = async (request, { params }) => {
   let { category } = params;
-  const databaseRef = collection(db, category);
-  const querySnapshot = await getDocs(databaseRef);
+  let c = getProductCategory(category);
+  const databaseRef = collection(db, "productos");
+  const q = query(databaseRef, where("category", "==", c));
+  const querySnapshot = await getDocs(q);
   const docs = querySnapshot.docs.map((d) => {
     return { ...d.data(), id: d.id };
   });
-  // revalidateTag("productos");
   revalidatePath("/productos/[category]");
   return NextResponse.json(docs);
 };

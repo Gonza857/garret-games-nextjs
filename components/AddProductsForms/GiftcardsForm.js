@@ -1,48 +1,37 @@
 "use client";
 import React, { useState } from "react";
 import Button from "../Button";
-import { uploadProduct } from "@/actions/actions";
 import { useParams } from "next/navigation";
+import Firebase from "../classes/Firebase";
+import { buildObject } from "@/helpers/product-builders";
+
+const uploadProduct = async (values, isUsingImage) => {
+  await Firebase.postProductAndImage(values, isUsingImage)
+    .then(() => {
+      console.log("Todo OK amigo");
+    })
+    .catch((e) => console.log(e));
+  return true;
+};
+
+const getDataForm = (eTarget, category) => {
+  let n = new FormData(eTarget);
+  return buildObject(n, category);
+};
 
 const GiftcardsForm = () => {
+  const path = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [actualImage, setActualImage] = useState(product.image || "");
-  const [imagePreview, setImagePreview] = useState(null);
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result); // Asigna la imagen leída como preview
-        setActualImage("new uploaded");
-      };
-      reader.readAsDataURL(file); // Lee el archivo como una URL de datos
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    let updatedValues = getFormValues(e.target);
-    let isImageChanged = false;
-    if (actualImage == product.image) {
-      // console.log("No la cambió");
-      updatedValues.image = product.image;
-    } else if (actualImage == "new uploaded") {
-      // console.log("no es la misma, la actualizamos");
-      isImageChanged = true;
-      updatedValues.image = imagePreview;
-    } else if (actualImage == "") {
-      // console.log("la borramos y dejamos una por defecto");
-      throwAlert();
-    }
-    updatedValues.category = product.category;
-    updatedValues.id = product.id;
-    updatedValues.console = updatedValues.console.split("-");
-    await Firebase.postProductAndImage(updatedValues, isImageChanged)
+    let isUsingImage = false;
+    let formData = getDataForm(e.target, path.category);
+    if (formData.image != null) isUsingImage = true;
+    await uploadProduct(formData, isUsingImage)
       .then((r) => {
-        setIsLoading(false);
+        setIsLoading(!r);
       })
       .catch((r) => console.log(r));
   };
@@ -50,7 +39,7 @@ const GiftcardsForm = () => {
   return (
     <form
       className="w-4/12 flex gap-3 flex-col p-4 rounded-sm border"
-      action={handleSubmit}
+      onSubmit={handleSubmit}
     >
       <InputsRow>
         <input
@@ -97,9 +86,9 @@ const GiftcardsForm = () => {
       </InputsRow>
       <InputsRow></InputsRow>
       <InputsRow>
-        <input type="file" name="img" />
+        <input type="file" name="image" />
       </InputsRow>
-      <Button>Agregar</Button>
+      <Button>{isLoading ? "Enviando" : "Agregar"}</Button>
     </form>
   );
 };

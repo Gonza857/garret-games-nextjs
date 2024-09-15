@@ -1,4 +1,4 @@
-import Login from "@/app/login/page";
+import Login from "@/app/pages/login/page";
 
 const LoginPage = () => {
   return (

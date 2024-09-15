@@ -35,11 +35,13 @@ const Header = () => {
                 className={`${
                   pathName === link.href ? "font-bold" : ""
                 }  hover:text-slate-400 ${
-                  link.href == "/carrito" && "flex gap-2"
+                  link.href == "/pages/carrito" && "flex gap-2"
                 }`}
               >
                 {link.title}
-                {link.href == "/carrito" && !isCartEmpty() ? cart.length : ""}
+                {link.href == "/pages/carrito" && !isCartEmpty()
+                  ? cart.length
+                  : ""}
               </Link>
             </li>
           ))}

@@ -24,9 +24,9 @@ const knowCategory = (c) => {
   }
 };
 
-const deleteProductImage = async (id, category) => {
+const deleteProductImage = async (id) => {
   let aux = false;
-  const desertRef = ref(storage, `${knowCategory(category)}/${id}`);
+  const desertRef = ref(storage, `productos/${id}`);
   deleteObject(desertRef).then(() => {
     aux = true;
   });
@@ -35,26 +35,29 @@ const deleteProductImage = async (id, category) => {
 
 async function handleDeleteProduct(product) {
   "use server";
-  console.log("eliminando", product.id);
-  let c = knowCategory(product.category);
-  await deleteDoc(doc(db, c, product.id))
+  await deleteDoc(doc(db, "productos", product.id))
     .then(() => {
       console.log("Eliminé producto");
-      deleteProductImage(product.id, product.category)
-        .then(() => {
-          console.log("Eliminé imagen");
-        })
-        .catch((e) => console.log(e.message));
+      // deleteProductImage(product.id, product.category)
+      //   .then(() => {
+      //     console.log("Eliminé imagen");
+      //   })
+      //   .catch((e) => console.log(e.message));
     })
     .catch((e) => {
       console.log(e.message);
     });
 }
 
-const AdminProductList = async () => {
+const getProducts = async () => {
   const response = await fetch("http://localhost:3000/api/productos", {
     cache: "no-store",
   }).then((r) => r.json());
+  return response;
+};
+
+const AdminProductList = async () => {
+  const response = await getProducts();
 
   let games = response.filter((p) => p.category == "game");
   let subscriptions = response.filter((p) => p.category == "subscription");

@@ -27,8 +27,6 @@ export const AuthProvider = ({ children }) => {
       values.email,
       values.password
     );
-    console.log(userCredential);
-
     const user = userCredential.user;
 
     setUser({
@@ -45,8 +43,6 @@ export const AuthProvider = ({ children }) => {
       values.email,
       values.password
     );
-    console.log(userCredential);
-
     const user = userCredential.user;
 
     setUser({
@@ -66,7 +62,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         setUser({
           logged: true,
