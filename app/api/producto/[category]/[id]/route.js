@@ -4,6 +4,8 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
+// lol
+
 export async function GET(req, { params }) {
   try {
     const { id } = params;
