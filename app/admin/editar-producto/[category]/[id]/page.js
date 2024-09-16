@@ -7,7 +7,8 @@ const getSingleProduct = async (id, category) => {
   let baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
-  return await fetch(`${baseUrl}/api/producto/${category}/${id}`, {
+  let normal = "http://localhost:3000";
+  return await fetch(`${normal}/api/producto/${category}/${id}`, {
     cache: "no-store",
   }).then((r) => r.json());
 };

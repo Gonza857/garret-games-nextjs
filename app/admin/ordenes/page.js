@@ -29,7 +29,8 @@ const AdminOrders = async () => {
   let baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
-  const orders = await fetch(`${baseUrl}/api/ordenes`, {
+  let normal = "http://localhost:3000";
+  const orders = await fetch(`${normal}/api/ordenes`, {
     cache: "no-store",
   }).then((r) => r.json());
 

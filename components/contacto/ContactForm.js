@@ -14,7 +14,8 @@ const ContactForm = () => {
     let baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : "http://localhost:3000";
-    await fetch(`${baseUrl}/api/contacto`, {
+    let normal = "http://localhost:3000";
+    await fetch(`${normal}/api/contacto`, {
       method: "POST",
       body: JSON.stringify(value),
     });
