@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Button from "../Button";
+import Button from "../UI/Button";
 import Swal from "sweetalert2";
 import Firebase from "../classes/Firebase";
 

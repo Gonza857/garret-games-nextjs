@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ProductCounter from "../ProductCounter";
 import Link from "next/link";
-import Button from "../Button";
+import Button from "../UI/Button";
 import { useCartContext } from "../context/CartContext";
 import { toastSuccess } from "@/helpers/toasts";
 

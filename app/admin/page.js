@@ -1,5 +1,5 @@
 import AdminProductList from "@/components/admin/AdminProductList";
-import Button from "@/components/Button";
+import Button from "@/components/UI/Button";
 import LogoutButton from "@/components/LogoutButton";
 import Link from "next/link";
 import React, { Suspense } from "react";
@@ -16,8 +16,8 @@ export const metadata = {
 
 const Admin = () => {
   return (
-    <main className="min-h-screen pt-20 pb-12 flex flex-col items-center bg-slate-600">
-      <div className="w-full bg-cyan-900 py-2 flex justify-center items-center gap-3">
+    <main className="min-h-screen md:pb-12 flex flex-col items-center bg-slate-600">
+      <div className="w-full pt-16 md:pt-24 md:pb-4 bg-cyan-900 py-2 flex flex-wrap flex-row justify-center items-center gap-3">
         {options.map((o) => (
           <Link
             href={`/admin/agregarproducto/${o.path}`}
@@ -31,7 +31,7 @@ const Admin = () => {
         </Link>
         <LogoutButton />
       </div>
-      <div className="w-10/12 flex items-center justify-center">
+      <div className="w-full lg:w-10/12 flex items-center justify-center">
         <AdminProductList />
       </div>
     </main>

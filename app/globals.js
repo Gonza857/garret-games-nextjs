@@ -5,13 +5,22 @@ export const links = [
   { title: "Juegos", href: "/pages/productos/juegos" },
   { title: "PlayStation Plus", href: "/pages/productos/playstationplus" },
   { title: "Tarjetas de regalo", href: "/pages/productos/tarjetasderegalo" },
-  { title: "Ayuda", href: "/pages/ayuda" },
+  // { title: "Ayuda", href: "/pages/ayuda" },
   { title: "Contacto", href: "/pages/contacto" },
-  { title: "Admin", href: "/admin" },
   {
     title: <IoCartOutline style={{ fontSize: "1.5rem" }} />,
     href: "/pages/carrito",
   },
+];
+
+export const footerLinks = [
+  { title: "Inicio", href: "/" },
+  { title: "Juegos", href: "/pages/productos/juegos" },
+  { title: "PlayStation Plus", href: "/pages/productos/playstationplus" },
+  { title: "Tarjetas de regalo", href: "/pages/productos/tarjetasderegalo" },
+  // { title: "Ayuda", href: "/pages/ayuda" },
+  { title: "Contacto", href: "/pages/contacto" },
+  { title: "Admin", href: "/admin" },
 ];
 
 export const categories = [

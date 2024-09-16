@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useAuthContext } from "./context/AuthContext";
-import Button from "./Button";
+import Button from "./UI/Button";
 
 const LogoutButton = () => {
   const { logout } = useAuthContext();

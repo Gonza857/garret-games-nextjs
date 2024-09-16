@@ -89,9 +89,30 @@ export default class Firebase {
   }
 
   static async makeOrder(order) {
-    let { canMakeOrder, batch } = await this.getDocsToSubstractProductQuantity(
-      order.items
-    );
+    let enStock = [];
+    let fueraStock = [];
+    let { items } = order;
+    console.log("llegan");
+    console.log(items);
+    // Recorremos el array de productos
+    for (const prod of items) {
+      const productoRef = doc(this.FIRESTORE, "productos", prod.id); // Reemplaza 'productos' por el nombre de tu colección
+      const productoSnap = await getDoc(productoRef);
+      // Verificar si el producto existe
+      if (productoSnap.exists()) {
+        console.log(productoSnap.data());
+        const datosProducto = productoSnap.data();
+        // Verificar si hay suficiente stock
+        if (datosProducto.stock >= prod.quantity) {
+          enStock.push({ ...prod });
+        } else {
+          fueraStock.push({ ...prod });
+        }
+      }
+    }
+
+    if (fueraStock.length > 0) return `Fuera de stock ${fueraStock.length}`;
+    return 43;
     // if (canMakeOrder == true) {
     //   try {
     //     const docref = collection(this.FIRESTORE, "orders");
@@ -108,48 +129,30 @@ export default class Firebase {
   }
 
   static async getDocsToSubstractProductQuantity(items) {
-    console.log("Items");
+    let success = true;
+    let outOfStock = [];
+    let inStock = [];
+    console.log("cart items:");
     console.log(items);
-    console.log("colecciones: ", this.COLLECTIONS);
-    let success = false;
-    let docPromises = [];
 
-    this.COLLECTIONS.forEach(async (col) => {
-      docPromises = items.map(async (i) => {
-        const singleDocRef = doc(this.FIRESTORE, col, i.id);
-        if (singleDocRef) {
-          return await getDoc(singleDocRef);
+    for (const item in items) {
+      const singleDocRef = doc(this.FIRESTORE, "productos", item.id);
+      await getDoc(singleDocRef).then((r) => {
+        let product = {
+          ...r.data(),
+          id: r.id,
+        };
+        console.log("encontre:", product.id);
+        if (product.stock >= item.quantity) {
+          inStock.push(item);
+        } else {
+          outOfStock.push(item);
         }
       });
-    });
+    }
 
-    console.log(docPromises);
-    // const docPromises = items.map((i) => {
-    //   this.COLLECTIONS.map((e) => {
-    //     const singleDocRef = doc(this.FIRESTORE, e, i.id);
-    //     console.log(singleDocRef);
-    //     return getDoc(singleDocRef);
-    //   });
-    // });
+    if (outOfStock.length > 0) success = false;
 
-    // console.log(docPromises);
-
-    const docs = await Promise.all(docPromises);
-    const batch = writeBatch(this.FIRESTORE);
-    const noStockProducts = [];
-    docs.forEach((doc) => {
-      console.log(doc);
-      // const { inStock } = doc.data();
-      // const itemInCart = items.find((item) => item.id == doc.id);
-      // if (itemInCart.quantity >= inStock) {
-      //   batch.update(doc.ref, { inStock: inStock - itemInCart.quantity });
-      // } else {
-      //   noStockProducts.push(itemInCart);
-      // }
-    });
-
-    if (noStockProducts.length > 0) return noStockProducts;
-    success = true;
-    return { success, batch };
+    return { success, outOfStock, inStock };
   }
 }

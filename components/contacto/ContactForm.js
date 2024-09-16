@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Button from "../Button";
+import Button from "../UI/Button";
 
 const ContactForm = () => {
   const [value, setValue] = useState({ email: "", text: "" });

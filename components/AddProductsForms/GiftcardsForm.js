@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Button from "../Button";
+import Button from "../UI/Button";
 import { useParams } from "next/navigation";
 import Firebase from "../classes/Firebase";
 import { buildObject } from "@/helpers/product-builders";
@@ -38,7 +38,7 @@ const GiftcardsForm = () => {
 
   return (
     <form
-      className="w-4/12 flex gap-3 flex-col p-4 rounded-sm border"
+      className="ww-full sm:w-8/12 lg:w-6/12 xl:w-4/12 flex gap-3 flex-col p-4 rounded-sm border"
       onSubmit={handleSubmit}
     >
       <InputsRow>
@@ -86,7 +86,7 @@ const GiftcardsForm = () => {
       </InputsRow>
       <InputsRow></InputsRow>
       <InputsRow>
-        <input type="file" name="image" />
+        <input type="file" name="image" className="w-full" />
       </InputsRow>
       <Button>{isLoading ? "Enviando" : "Agregar"}</Button>
     </form>

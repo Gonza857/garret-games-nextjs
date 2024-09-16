@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import Button from "../Button";
+import Button from "../UI/Button";
 import Link from "next/link";
 import { useCartContext } from "../context/CartContext";
 import { toastSuccess } from "@/helpers/toasts";

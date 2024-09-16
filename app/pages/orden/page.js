@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/Button";
+import Button from "@/components/UI/Button";
 import Firebase from "@/components/classes/Firebase";
 import { useCartContext } from "@/components/context/CartContext";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,14 @@ const successModal = (orderNumber) => {
     title: "Orden realizada correctamente.",
     text: `Tu número de orden es ${orderNumber}`,
     icon: "success",
+    confirmButtonText: "Volver a inicio",
+  });
+};
+
+const warnModal = () => {
+  return Swal.fire({
+    title: "Hay productos sin stock, intentalo nuevamente",
+    icon: "warning",
     confirmButtonText: "Volver a inicio",
   });
 };
@@ -38,9 +46,15 @@ const Orden = () => {
     console.log(formData);
     Firebase.makeOrder(formData)
       .then((r) => {
-        successModal(r).then(() => {
-          router.replace("/");
-        });
+        if (r == 43) {
+          successModal(r).then(() => {
+            router.replace("/");
+          });
+        } else {
+          warnModal().then(() => {
+            router.replace("/");
+          });
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -48,9 +62,9 @@ const Orden = () => {
   };
 
   return (
-    <main className="min-h-screen w-full pt-20 flex justify-center items-center">
+    <main className="min-h-screen w-full pt-14 flex justify-center items-center">
       <form
-        className="w-3/12 flex flex-col gap-4 p-4 border rounded"
+        className="w-11/12 sm:w-8/12 md:w-5/12 lg:w-4/12 xl:w-3/12 flex flex-col gap-4 p-4 border rounded"
         onSubmit={handleSubmit}
       >
         <caption className="text-2xl">Realizar orden</caption>
