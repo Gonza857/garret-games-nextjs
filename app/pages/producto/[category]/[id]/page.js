@@ -21,6 +21,8 @@ const getSingleProduct = async (id, category) => {
   }).then((r) => r.json());
 };
 
+export const dynamic = "force-dynamic";
+
 const ProductDetails = async ({ params }) => {
   const id = params.id;
   const category = params.category;

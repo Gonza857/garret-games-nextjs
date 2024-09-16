@@ -9,6 +9,8 @@ const consoles = [
   { url: "ps5", slug: "PS5" },
 ];
 
+export const dynamic = "force-dynamic";
+
 async function ProductList({ category = "" }) {
   let baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`

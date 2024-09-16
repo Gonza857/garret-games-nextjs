@@ -41,6 +41,8 @@ export function generateStaticParams() {
 
 export const revalidate = 900;
 
+export const dynamic = "force-dynamic";
+
 const Juegos = async ({ params }) => {
   let baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
