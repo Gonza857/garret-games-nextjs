@@ -74,7 +74,9 @@ const ProductDetails = async ({ params }) => {
             <p className="text-xl font-semibold">Métodos de Pago</p>
             <ul className="px-4 flex flex-col">
               {paymentMethods.map((m) => (
-                <li className="list-disc">{m}</li>
+                <li className="list-disc" key={m}>
+                  {m}
+                </li>
               ))}
             </ul>
           </div>
