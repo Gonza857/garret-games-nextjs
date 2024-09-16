@@ -19,7 +19,7 @@ const Login = () => {
   };
 
   return (
-    <main className="pt-20flex justify-center items-center min-h-screen">
+    <main className="pt-20 flex justify-center items-center min-h-screen">
       <div className="flex flex-col w-fit border rounded-lg items-center p-4 gap-4">
         <h3 className="text-xl">Login</h3>
         <form
