@@ -15,10 +15,10 @@ const ContactForm = () => {
       ? `https://${process.env.VERCEL_URL}`
       : "http://localhost:3000";
     let normal = "http://localhost:3000";
-    await fetch(`${normal}/api/contacto`, {
-      method: "POST",
-      body: JSON.stringify(value),
-    });
+    // await fetch(`${normal}/api/contacto`, {
+    //   method: "POST",
+    //   body: JSON.stringify(value),
+    // });
   };
 
   return (

@@ -50,7 +50,7 @@ const Juegos = async ({ params }) => {
   let normal = "http://localhost:3000";
   let c = knowCategory(params.category);
   const products = await fetch(
-    `${normal}/api/productos/${c}/${params.consoleNumber}`,
+    `${baseUrl}/api/productos/${c}/${params.consoleNumber}`,
     {
       cache: "no-store",
       next: {
