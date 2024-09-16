@@ -25,6 +25,8 @@ const headers = [
   },
 ];
 
+export const dynamic = "force-dynamic";
+
 const AdminOrders = async () => {
   let baseUrl = process.env.VERCEL_URL
     ? `http://${process.env.VERCEL_URL}`
