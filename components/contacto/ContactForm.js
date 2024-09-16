@@ -11,7 +11,10 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:3000/api/contacto", {
+    let baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";
+    await fetch(`${baseUrl}/api/contacto`, {
       method: "POST",
       body: JSON.stringify(value),
     });

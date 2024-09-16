@@ -50,7 +50,10 @@ async function handleDeleteProduct(product) {
 }
 
 const getProducts = async () => {
-  const response = await fetch("http://localhost:3000/api/productos", {
+  let baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/productos`, {
     cache: "no-store",
   }).then((r) => r.json());
   return response;

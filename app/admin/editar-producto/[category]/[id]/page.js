@@ -4,7 +4,10 @@ import SubscriptionsForm from "@/components/EditProductsForms/SubscriptionsForm"
 import React from "react";
 
 const getSingleProduct = async (id, category) => {
-  return await fetch(`http://localhost:3000/api/producto/${category}/${id}`, {
+  let baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+  return await fetch(`${baseUrl}/api/producto/${category}/${id}`, {
     cache: "no-store",
   }).then((r) => r.json());
 };

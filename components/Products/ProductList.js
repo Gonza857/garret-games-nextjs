@@ -10,13 +10,13 @@ const consoles = [
 ];
 
 async function ProductList({ category = "" }) {
-  const products = await fetch(
-    `http://localhost:3000/api/productos${category}`,
-    {
-      cache: "no-store",
-      next: {},
-    }
-  ).then((r) => r.json());
+  let baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+  const products = await fetch(`${baseUrl}/api/productos${category}`, {
+    cache: "no-store",
+    next: {},
+  }).then((r) => r.json());
 
   return (
     <>

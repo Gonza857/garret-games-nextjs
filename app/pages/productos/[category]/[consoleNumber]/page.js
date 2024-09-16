@@ -42,9 +42,12 @@ export function generateStaticParams() {
 export const revalidate = 900;
 
 const Juegos = async ({ params }) => {
+  let baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
   let c = knowCategory(params.category);
   const products = await fetch(
-    `http://localhost:3000/api/productos/${c}/${params.consoleNumber}`,
+    `${baseUrl}/api/productos/${c}/${params.consoleNumber}`,
     {
       cache: "no-store",
       next: {
