@@ -45,9 +45,8 @@ export const dynamic = "force-dynamic";
 
 const Juegos = async ({ params }) => {
   let baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    ? `http://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
-  let normal = "http://localhost:3000";
   let c = knowCategory(params.category);
   const products = await fetch(
     `${baseUrl}/api/productos/${c}/${params.consoleNumber}`,

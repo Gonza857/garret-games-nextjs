@@ -12,7 +12,7 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
+      ? `http://${process.env.VERCEL_URL}`
       : "http://localhost:3000";
     let normal = "http://localhost:3000";
     // await fetch(`${normal}/api/contacto`, {

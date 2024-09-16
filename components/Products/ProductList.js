@@ -13,16 +13,11 @@ export const dynamic = "force-dynamic";
 
 async function ProductList({ category = "" }) {
   let baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    ? `http://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
-  let normal = "http://localhost:3000";
-  console.log(process.env.VERCEL_URL);
-  const products = await fetch(
-    `https://${process.env.VERCEL_URL}/api/productos${category}`,
-    {
-      cache: "no-store",
-    }
-  ).then((r) => r.json());
+  const products = await fetch(`${baseUrl}/api/productos${category}`, {
+    cache: "no-store",
+  }).then((r) => r.json());
 
   return (
     <>
