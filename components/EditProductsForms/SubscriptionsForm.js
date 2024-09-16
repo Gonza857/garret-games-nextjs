@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "../UI/Button";
 import Swal from "sweetalert2";
 import Firebase from "../classes/Firebase";
+import Image from "next/image";
 
 const throwAlert = () => {
   Swal.fire({
@@ -183,11 +184,11 @@ const ImageHandler = ({
   if (state == "update") {
     return <input type="file" name="image" onChange={handleImageChange} />;
   } else if (state == productUrl) {
-    return <img src={productUrl} />;
+    return <Image width={1000} height={1000} src={productUrl} />;
   } else if (state == "") {
-    return <img src={"/images/no-image.jpg"} />;
+    return <Image width={1000} height={1000} src={"/images/no-image.jpg"} />;
   } else if ((state = "new uploaded")) {
-    return <img src={imagePreview} />;
+    return <Image width={1000} height={1000} src={imagePreview} />;
   }
 };
 
