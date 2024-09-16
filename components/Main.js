@@ -22,8 +22,8 @@ const Skeletons = ({ quantity }) => {
     <ProductsWrapper>
       {Array(quantity)
         .fill({})
-        .map(() => (
-          <ProductSkeleton />
+        .map((v, i) => (
+          <ProductSkeleton key={i} />
         ))}
     </ProductsWrapper>
   );

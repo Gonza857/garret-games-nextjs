@@ -81,7 +81,7 @@ const Header = () => {
         >
           <ul className="flex flex-col gap-5 text-white items-center">
             {links.map((link) => {
-              if (link.href == "/pages/carrito") return <></>;
+              if (link.href == "/pages/carrito") return;
               return (
                 <li
                   onClick={() => setIsOpenMenu(false)}

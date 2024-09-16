@@ -36,6 +36,7 @@ const ConsoleCategories = () => {
       <p>Consola: </p>
       {consoles.map((c) => (
         <Link
+          key={`${c.slug}+${c.url}`}
           href={`/productos/juegos/${c.url}`}
           className="text-cyan-800 font-semibold transition-all hover:scale-110"
         >

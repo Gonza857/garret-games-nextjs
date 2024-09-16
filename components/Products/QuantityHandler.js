@@ -18,9 +18,7 @@ const QuantityHandler = ({ item, buttonVisibility = true }) => {
     } else {
       setThisItem(item);
     }
-    console.log("Cambie el producto");
-    console.log(item);
-  }, [cart]);
+  }, [cart, getCartItem]);
 
   const handleAdd = () => {
     toastSuccess(`Agregaste ${selectedQuantity} unidades al carrito.`);
