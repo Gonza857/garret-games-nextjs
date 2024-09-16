@@ -3,6 +3,8 @@ import ProductList from "./Products/ProductList";
 import ProductSkeleton from "./ProductSkeleton/ProductSkeleton";
 import ProductsWrapper from "./Products/ProductsWrapper";
 
+export const dynamic = "force-dynamic";
+
 const Main = async () => {
   return (
     <main className="w-full pt-20 min-h-screen flex flex-col flex-wrap items-center px-1">

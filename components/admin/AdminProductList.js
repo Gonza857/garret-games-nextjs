@@ -49,8 +49,6 @@ async function handleDeleteProduct(product) {
     });
 }
 
-export const dynamic = "force-dynamic";
-
 const getProducts = async () => {
   let baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
