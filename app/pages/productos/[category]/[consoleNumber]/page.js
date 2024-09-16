@@ -55,7 +55,6 @@ const Juegos = async ({ params }) => {
       },
     }
   ).then((r) => r.json());
-  console.log(c);
 
   return (
     <main className="pt-20 flex flex-col items-center">

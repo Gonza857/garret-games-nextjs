@@ -2,7 +2,6 @@ const GAME = "game";
 const SUBSCRIPTION = "subscription";
 const GIFTCARD = "giftcard";
 export const getDataBaseCategory = (c) => {
-  console.log("me llega: ", c);
   switch (c) {
     case GAME:
       return "games";

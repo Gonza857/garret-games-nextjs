@@ -4,13 +4,14 @@ import Button from "../UI/Button";
 import { useParams } from "next/navigation";
 import Firebase from "../classes/Firebase";
 import { buildObject } from "@/helpers/product-builders";
+import { toastSuccess } from "@/helpers/toasts";
 
 const uploadProduct = async (values, isUsingImage) => {
   await Firebase.postProductAndImage(values, isUsingImage)
     .then(() => {
-      console.log("Todo OK amigo");
+      toastSuccess("Producto subido correctamente.");
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.error(e));
   return true;
 };
 
@@ -33,7 +34,7 @@ const SubscriptionsForm = () => {
       .then((r) => {
         setIsLoading(!r);
       })
-      .catch((r) => console.log(r));
+      .catch((r) => console.error(r));
   };
 
   return (

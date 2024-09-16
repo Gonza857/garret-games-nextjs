@@ -76,7 +76,7 @@ const GiftcardsForm = ({ product }) => {
       .then((r) => {
         setIsLoading(false);
       })
-      .catch((r) => console.log(r));
+      .catch((r) => console.error(r));
   };
 
   return (

@@ -6,6 +6,7 @@ import GamesTable from "./GamesTable";
 import GiftcardsForm from "../AddProductsForms/GiftcardsForm";
 import GiftcardsTable from "./GiftcardsTable";
 import { deleteObject, ref } from "firebase/storage";
+import { toastSuccess } from "@/helpers/toasts";
 
 const GAMES = "game";
 const SUBSCRIPTION = "subscription";
@@ -37,24 +38,21 @@ async function handleDeleteProduct(product) {
   "use server";
   await deleteDoc(doc(db, "productos", product.id))
     .then(() => {
-      console.log("Eliminé producto");
-      // deleteProductImage(product.id, product.category)
-      //   .then(() => {
-      //     console.log("Eliminé imagen");
-      //   })
-      //   .catch((e) => console.log(e.message));
+      deleteProductImage(product.id, product.category)
+        .then(() => {
+          toastSuccess("Producto eliminado correctamente");
+        })
+        .catch((e) => console.error(e.message));
     })
     .catch((e) => {
-      console.log(e.message);
+      console.error(e.message);
     });
 }
 
 const getProducts = async () => {
   let baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    ? `http://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
-  let normal = "http://localhost:3000";
-  console.log(baseUrl);
   const response = await fetch(`${baseUrl}/api/productos`, {
     cache: "no-store",
   }).then((r) => r.json());

@@ -37,17 +37,17 @@ const getFormdata = (eTarget, total, items) => {
 };
 
 const Orden = () => {
-  const { total, cart } = useCartContext();
+  const { total, cart, emptyCart } = useCartContext();
   const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let formData = getFormdata(e.target, total, [...cart]);
-    console.log(formData);
     Firebase.makeOrder(formData)
       .then((r) => {
-        if (r == 43) {
+        if (r.length > 16) {
           successModal(r).then(() => {
+            emptyCart();
             router.replace("/");
           });
         } else {
@@ -57,7 +57,7 @@ const Orden = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
       });
   };
 

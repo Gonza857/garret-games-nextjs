@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <>
       <header className="w-full h-20 border-b-4 border-cyan-500 fixed z-40 bg-cyan-800 hidden md:block">
-        <div className="md:w-11/12 lg:w-9/12 mx-auto h-full flex justify-between items-center">
+        <div className="md:w-11/12 lg:w-10/12 xl:w-9/12 mx-auto h-full flex justify-between items-center">
           <Link href={"/"} className="rounded-full overflow-hidden">
             <Image
               src={"/images/logo-nuevo.png"}
@@ -68,9 +68,9 @@ const Header = () => {
           </Link>
           <Link
             href={"/pages/carrito"}
-            className={`font-bold hover:text-slate-400 flex gap-2`}
+            className={`font-bold hover:text-slate-400 flex gap-2 text-white`}
           >
-            <IoCartOutline className="text-white text-2xl" />
+            <IoCartOutline className="text-2xl" />
             {!isCartEmpty() ? cart.length : ""}
           </Link>
         </div>
@@ -95,9 +95,7 @@ const Header = () => {
                     href={link.href}
                     className={`${
                       pathName === link.href ? "font-bold" : ""
-                    }  hover:text-slate-400 ${
-                      link.href == "/pages/carrito" && "flex gap-2"
-                    }`}
+                    }  hover:text-slate-400`}
                   >
                     {link.title}
                   </Link>

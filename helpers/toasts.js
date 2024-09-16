@@ -2,7 +2,7 @@ import { toast, Bounce } from "react-toastify";
 
 export const toastWarn = (message) => {
   toast.warn(message, {
-    position: "top-right",
+    position: "bottom-center",
     autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -16,7 +16,7 @@ export const toastWarn = (message) => {
 
 export const toastSuccess = (message) => {
   toast.success(message, {
-    position: "top-right",
+    position: "bottom-center",
     autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,

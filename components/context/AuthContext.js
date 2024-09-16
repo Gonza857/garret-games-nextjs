@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
   });
 
   const registerUser = async (values) => {
-    console.log(values);
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       values.email,
@@ -37,7 +36,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const loginUser = async (values) => {
-    console.log(values);
     const userCredential = await signInWithEmailAndPassword(
       auth,
       values.email,

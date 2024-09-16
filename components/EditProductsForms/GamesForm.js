@@ -76,7 +76,7 @@ const GamesForm = ({ product }) => {
       .then(() => {
         setIsLoading(false);
       })
-      .catch((r) => console.log(r));
+      .catch((r) => console.error(r));
   };
 
   return (

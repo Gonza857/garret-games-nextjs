@@ -33,6 +33,9 @@ export const Footer = () => {
               </li>
             );
           })}
+          <Link key={"adm"} href={"/admin"} className={`hover:text-slate-400`}>
+            Administración
+          </Link>
         </ul>
         <hr className="md:hidden" />
         {/* COL 3 */}
